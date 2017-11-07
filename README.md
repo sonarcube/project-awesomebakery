@@ -1,6 +1,6 @@
 # AwesomeBakery project
 
 ## Team members
-* Torsten Jandt
-* Markus Wiktorin
-* Artur Zimmermann
+* Torsten Jandt - element54
+* Markus Wiktorin - mwiktorin
+* Artur Zimmermann - azimme2s
