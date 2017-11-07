@@ -1,7 +1,9 @@
-lanuage: java
+language: java
 jdk:
     - openjdk7
-
+group: stable
+dist: trusty
+os: linux
 script:
     - export JADE_LIB=$TRAVIS_BUILD_DIR/lib
     - export CLASSPATH=".:${JADE_LIB}/jade.jar:${JADE_LIB}/commons-codec/commons-codec-1.3.jar:${JADE_LIB}/jadeExamples.jar:${JADE_LIB}"
