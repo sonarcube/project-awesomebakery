@@ -45,7 +45,7 @@ public class Cashier extends Agent {
 				String name = msg.getContent();
 				ACLMessage reply = msg.createReply();
 				orders.add(name);
-				reply.setPerformative(ACLMessage.FAILURE);
+				reply.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
 				myAgent.send(reply);
 				System.out.println(orders);
 			} else {
