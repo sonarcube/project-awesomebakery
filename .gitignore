@@ -2,6 +2,10 @@ bin/
 .classpath
 .project
 .settings/
+build/
+.gradle/
+APDescription.txt
+MTPs-Main-Container.txt
 
 # Compiled class file
 *.class
