@@ -1,4 +1,4 @@
-package maas;
+package org.awesomebakery.agents;
 
 import jade.content.lang.Codec;
 import jade.content.lang.sl.SLCodec;

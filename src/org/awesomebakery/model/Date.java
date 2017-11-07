@@ -1,3 +1,4 @@
+package org.awesomebakery.model;
 
 public class Date {
 

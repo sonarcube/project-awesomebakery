@@ -1,3 +1,6 @@
+package org.awesomebakery.agents;
+
+import org.awesomebakery.model.Location;
 
 public class Truck {
 
