@@ -1,5 +1,6 @@
-# project
+# AwesomeBakery project
 
-## Team Name
-* Name1 LastName1
-* Name2 LastName2
+## Team members
+* Torsten Jandt
+* Markus Wiktorin
+* Artur Zimmermann
