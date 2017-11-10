@@ -3,9 +3,9 @@
 [![Build Status](https://travis-ci.org/HBRS-MAAS/project-awesomebakery.svg?branch=master)](https://travis-ci.org/HBRS-MAAS/project-awesomebakery)
 
 ## Team members
-* Torsten Jandt - @element54
-* Markus Wiktorin - @mwiktorin
-* Artur Zimmermann - @azimme2s
+* Torsten Jandt - [@element54](https://github.com/element54)
+* Markus Wiktorin - [@mwiktorin](https://github.com/mwiktorin)
+* Artur Zimmermann - [@azimme2s](https://github.com/azimme2s)
 
 ## Howto run
 Just install gradle and run:
