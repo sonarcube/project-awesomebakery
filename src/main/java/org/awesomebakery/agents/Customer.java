@@ -1,6 +1,11 @@
 package org.awesomebakery.agents;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Vector;
 
 import jade.core.AID;
@@ -16,102 +21,121 @@ import jade.lang.acl.MessageTemplate;
 
 public class Customer extends Agent {
 
-	private static final long serialVersionUID = 1L;
-	private List<AID> cashiers = new Vector<>();
+    private static final long serialVersionUID = 1L;
+    private List<AID> cashiers = new Vector<>();
 
-	protected void setup() {
-		DFAgentDescription dfd = new DFAgentDescription();
-		dfd.setName(getAID());
-		ServiceDescription sd = new ServiceDescription();
-		sd.setType("customer");
-		sd.setName("customer");
-		dfd.addServices(sd);
-		try {
-			DFService.register(this, dfd);
-		} catch (FIPAException e) {
-			// TODO handle
-			e.printStackTrace();
-		}
-		addBehaviour(new FindCashiersBehaviour());
-	}
+    private List schedulOrder(String seperator, String filepath) throws FileNotFoundException{
+        ArrayList<String> scheduleList = new ArrayList<String>();
+        Scanner scanner = new Scanner(new File(filepath));
+        scanner.useDelimiter(seperator);
+        int counter = 0;
+        while(scanner.hasNext()){
+            scheduleList.add(counter, scanner.next());
+            counter++;
+        }
+        scanner.close();
+        return scheduleList;
+    }
 
-	private class FindCashiersBehaviour extends Behaviour {
-		private static final long serialVersionUID = 1L;
 
-		@Override
-		public void action() {
-			DFAgentDescription template = new DFAgentDescription();
-			ServiceDescription sd = new ServiceDescription();
-			sd.setType("cashier");
-			template.addServices(sd);
-			try {
-				cashiers.clear();
-				DFAgentDescription[] result = DFService.search(myAgent, template);
-				for (DFAgentDescription d : result) {
-					cashiers.add(d.getName());
-				}
-			} catch (FIPAException fe) {
-				fe.printStackTrace();
-			}
-			if (!cashiers.isEmpty()) {
-				myAgent.addBehaviour(new PlaceOrderBehaviour());
-			}
+    protected void setup() {
+        DFAgentDescription dfd = new DFAgentDescription();
+        dfd.setName(getAID());
+        ServiceDescription sd = new ServiceDescription();
+        sd.setType("customer");
+        sd.setName("customer");
+        dfd.addServices(sd);
+        try {
+            DFService.register(this, dfd);
+        } catch (FIPAException e) {
+            // TODO handle
+            e.printStackTrace();
+        }
+        addBehaviour(new FindBakeryBehaviour());
+    }
 
-		}
+    private class FindBakeryBehaviour extends Behaviour {
+        private static final long serialVersionUID = 1L;
 
-		@Override
-		public boolean done() {
-			// TODO Auto-generated method stub
-			return !cashiers.isEmpty();
-		}
+        @Override
+        public void action() {
+            DFAgentDescription template = new DFAgentDescription();
+            ServiceDescription sd = new ServiceDescription();
+            sd.setType("bakery");
+            template.addServices(sd);
+            try {
+                cashiers.clear();
+                DFAgentDescription[] result = DFService.search(myAgent, template);
+                for (DFAgentDescription d : result) {
+                    cashiers.add(d.getName());
+                }
+            } catch (FIPAException fe) {
+                fe.printStackTrace();
+            }
+            if (!cashiers.isEmpty()) {
+                myAgent.addBehaviour(new PlaceOrderBehaviour());
+            }
 
-	}
+        }
 
-	private MessageTemplate mt = null;
+        @Override
+        public boolean done() {
+            // TODO Auto-generated method stub
+            return !cashiers.isEmpty();
+        }
 
-	private class PlaceOrderBehaviour extends OneShotBehaviour {
-		private static final long serialVersionUID = 1L;
+    }
 
-		@Override
-		public void action() {
-			ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
-			cfp.addReceiver(cashiers.get(0));
-			cfp.setContent("test1");
-			cfp.setConversationId("order");
-			cfp.setReplyWith("cfp" + System.currentTimeMillis());
-			myAgent.send(cfp);
-			mt = MessageTemplate.and(MessageTemplate.MatchConversationId(cfp.getConversationId()),
-					MessageTemplate.MatchInReplyTo(cfp.getReplyWith()));
-			myAgent.addBehaviour(new CheckResponseBehaviour());
-		}
+    private MessageTemplate mt = null;
 
-	}
+    private class PlaceOrderBehaviour extends OneShotBehaviour {
+        private static final long serialVersionUID = 1L;
 
-	private class CheckResponseBehaviour extends Behaviour {
-		private static final long serialVersionUID = 1L;
-		boolean done = false;
-		@Override
-		public void action() {
-			ACLMessage reply = myAgent.receive(mt);
-			if (reply != null) {
-				if (reply.getPerformative() == ACLMessage.ACCEPT_PROPOSAL) {
-					// Good, nothing to do. exit
-					myAgent.doDelete();
-				} else {
-					// Failed, retry next time.
-					System.out.println("failed");
-					myAgent.addBehaviour(new FindCashiersBehaviour());
-					done = true;
-				}
-			} else {
-				block();
-			}
-		}
+        @Override
+        public void action() {
+            ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
+            cfp.addReceiver(cashiers.get(0));
+            try {
+                cfp.setContent(String.valueOf(schedulOrder(",","test.csv")));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            cfp.setConversationId("order");
+            cfp.setReplyWith("cfp" + System.currentTimeMillis());
+            myAgent.send(cfp);
+            mt = MessageTemplate.and(MessageTemplate.MatchConversationId(cfp.getConversationId()),
+                    MessageTemplate.MatchInReplyTo(cfp.getReplyWith()));
+            myAgent.addBehaviour(new CheckResponseBehaviour());
+        }
 
-		@Override
-		public boolean done() {
-			return done;
-		}
+    }
 
-	}
+    private class CheckResponseBehaviour extends Behaviour {
+        private static final long serialVersionUID = 1L;
+        boolean done = false;
+
+        @Override
+        public void action() {
+            ACLMessage reply = myAgent.receive(mt);
+            if (reply != null) {
+                if (reply.getPerformative() == ACLMessage.ACCEPT_PROPOSAL) {
+                    // Good, nothing to do. exit
+                    myAgent.doDelete();
+                } else {
+                    // Failed, retry next time.
+                    System.out.println("failed");
+                    myAgent.addBehaviour(new FindBakeryBehaviour());
+                    done = true;
+                }
+            } else {
+                block();
+            }
+        }
+
+        @Override
+        public boolean done() {
+            return done;
+        }
+
+    }
 }
