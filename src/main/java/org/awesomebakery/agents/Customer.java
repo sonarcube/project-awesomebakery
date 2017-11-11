@@ -28,10 +28,8 @@ public class Customer extends Agent {
         ArrayList<String> scheduleList = new ArrayList<String>();
         Scanner scanner = new Scanner(new File(filepath));
         scanner.useDelimiter(seperator);
-        int counter = 0;
         while(scanner.hasNext()){
-            scheduleList.add(counter, scanner.next());
-            counter++;
+            scheduleList.add(scanner.next());
         }
         scanner.close();
         return scheduleList;
@@ -61,7 +59,7 @@ public class Customer extends Agent {
         public void action() {
             DFAgentDescription template = new DFAgentDescription();
             ServiceDescription sd = new ServiceDescription();
-            sd.setType("bakery");
+            sd.setType("Factory");
             template.addServices(sd);
             try {
                 cashiers.clear();
@@ -96,7 +94,7 @@ public class Customer extends Agent {
             ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
             cfp.addReceiver(cashiers.get(0));
             try {
-                cfp.setContent(String.valueOf(schedulOrder(",","test.csv")));
+                cfp.setContent(String.valueOf(schedulOrder(",","./test.csv")));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }

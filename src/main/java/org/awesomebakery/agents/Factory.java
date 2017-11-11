@@ -102,7 +102,7 @@ public class Factory extends Agent {
 				orders.add(name);
 				reply.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
 				myAgent.send(reply);
-				System.out.println(orders);
+				System.out.println("I got this Order "+orders);
 			} else {
 				block();
 			}
