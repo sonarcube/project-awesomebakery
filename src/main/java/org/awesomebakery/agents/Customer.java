@@ -22,13 +22,17 @@ import jade.lang.acl.MessageTemplate;
 public class Customer extends Agent {
 
     private static final long serialVersionUID = 1L;
-    private List<AID> cashiers = new Vector<>();
+    private List<AID> factories = new Vector<>();
+    private static final String customer = "customer";
+    private static final String typeFactory = "Factory";
+    private static final String seperator = ",";
+    private static final String filepath = "./test.csv";
 
-    private List schedulOrder(String seperator, String filepath) throws FileNotFoundException{
+    private List schedulOrder(String seperator, String filepath) throws FileNotFoundException {
         ArrayList<String> scheduleList = new ArrayList<String>();
         Scanner scanner = new Scanner(new File(filepath));
         scanner.useDelimiter(seperator);
-        while(scanner.hasNext()){
+        while (scanner.hasNext()) {
             scheduleList.add(scanner.next());
         }
         scanner.close();
@@ -40,8 +44,8 @@ public class Customer extends Agent {
         DFAgentDescription dfd = new DFAgentDescription();
         dfd.setName(getAID());
         ServiceDescription sd = new ServiceDescription();
-        sd.setType("customer");
-        sd.setName("customer");
+        sd.setType(customer);
+        sd.setName(customer);
         dfd.addServices(sd);
         try {
             DFService.register(this, dfd);
@@ -59,18 +63,18 @@ public class Customer extends Agent {
         public void action() {
             DFAgentDescription template = new DFAgentDescription();
             ServiceDescription sd = new ServiceDescription();
-            sd.setType("Factory");
+            sd.setType(typeFactory);
             template.addServices(sd);
             try {
-                cashiers.clear();
+                factories.clear();
                 DFAgentDescription[] result = DFService.search(myAgent, template);
                 for (DFAgentDescription d : result) {
-                    cashiers.add(d.getName());
+                    factories.add(d.getName());
                 }
             } catch (FIPAException fe) {
                 fe.printStackTrace();
             }
-            if (!cashiers.isEmpty()) {
+            if (!factories.isEmpty()) {
                 myAgent.addBehaviour(new PlaceOrderBehaviour());
             }
 
@@ -79,7 +83,7 @@ public class Customer extends Agent {
         @Override
         public boolean done() {
             // TODO Auto-generated method stub
-            return !cashiers.isEmpty();
+            return !factories.isEmpty();
         }
 
     }
@@ -92,9 +96,9 @@ public class Customer extends Agent {
         @Override
         public void action() {
             ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
-            cfp.addReceiver(cashiers.get(0));
+            cfp.addReceiver(factories.get(0));
             try {
-                cfp.setContent(String.valueOf(schedulOrder(",","./test.csv")));
+                cfp.setContent(String.valueOf(schedulOrder(seperator, filepath)));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -123,7 +127,9 @@ public class Customer extends Agent {
                     // Failed, retry next time.
                     System.out.println("failed");
                     myAgent.addBehaviour(new FindBakeryBehaviour());
-                    done = true;
+                    if (done()) {
+                        myAgent.doDelete();
+                    }
                 }
             } else {
                 block();
@@ -132,7 +138,7 @@ public class Customer extends Agent {
 
         @Override
         public boolean done() {
-            return done;
+            return done = true;
         }
 
     }
