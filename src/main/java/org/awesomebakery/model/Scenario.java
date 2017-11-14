@@ -26,4 +26,12 @@ public class Scenario {
 		}
 		return scenario;
 	}
+	
+	public List<Product> getProducts() {
+		return products;
+	}
+	
+	public List<Order> getOrders() {
+		return orders;
+	}
 }

@@ -43,5 +43,10 @@ public class Order {
 	public Map<String, Integer> getProducts() {
 		return products;
 	}
+	
+	@Override
+	public String toString() {
+		return "<" + customerId + "," + orderDate + "," + deliveryDate + "," + products.toString() + ">";
+	}
 
 }

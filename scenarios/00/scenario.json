@@ -51,7 +51,8 @@
                 "hour": 12
             },
             "products": {
-                "bread": 5
+                "bread": 5,
+                "bagle": 2
             }
         },
         {
@@ -66,6 +67,21 @@
             },
             "products": {
                 "bagle": 5
+            }
+        },
+        {
+            "customer-id": "karl-gustav",
+            "order-date": {
+                "day": 3,
+                "hour": 12
+            },
+            "delivery-date": {
+                "day": 4,
+                "hour": 12
+            },
+            "products": {
+                "bagle": 1,
+                "bread": 5
             }
         }
     ]

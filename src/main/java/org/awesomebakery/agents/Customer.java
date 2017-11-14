@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Vector;
@@ -41,6 +42,11 @@ public class Customer extends Agent {
 
 
     protected void setup() {
+    	Object[] args = getArguments();
+    	System.out.println("Setup agent, i got these arguments:");
+    	for (Object o : args) {
+    		System.out.println(o);
+    	}
         DFAgentDescription dfd = new DFAgentDescription();
         dfd.setName(getAID());
         ServiceDescription sd = new ServiceDescription();
