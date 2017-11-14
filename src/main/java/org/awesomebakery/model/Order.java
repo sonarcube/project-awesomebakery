@@ -1,5 +1,7 @@
 package org.awesomebakery.model;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 public class Order {
 
 	private String customerId;
@@ -7,43 +9,28 @@ public class Order {
 	private Date deliveryDate;
 	private int[] orders;
 
-	public Order(String customerId, Date orderDate, Date deliveryDate, int[] orders) {
-		this.customerId = customerId;
-		this.orderDate = orderDate;
-		this.deliveryDate = deliveryDate;
-		this.orders = orders;
+	public static Order fromJson(JsonNode node) {
+		Order order = new Order();
+		order.customerId = node.get("customer-id").asText();
+		order.deliveryDate = Date.fromJson(node.get("delivery-date"));
+		order.orderDate = Date.fromJson(node.get("order-date"));
+		return order;
 	}
 
 	public String getCustomerId() {
 		return customerId;
 	}
 
-	public void setCustomerId(String customerId) {
-		this.customerId = customerId;
-	}
-
 	public Date getOrderDate() {
 		return orderDate;
-	}
-
-	public void setOrderDate(Date orderDate) {
-		this.orderDate = orderDate;
 	}
 
 	public Date getDeliveryDate() {
 		return deliveryDate;
 	}
 
-	public void setDeliveryDate(Date deliveryDate) {
-		this.deliveryDate = deliveryDate;
-	}
-
 	public int[] getOders() {
 		return orders;
-	}
-
-	public void setOders(int[] oders) {
-		this.orders = oders;
 	}
 
 }

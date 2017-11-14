@@ -1,8 +1,10 @@
 package org.awesomebakery.model;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 public class Product {
 
-	private String productId;
+	private String id;
 	private int doughPrepTime;
 	private int restingPeriod;
 	private int itemPrepTime;
@@ -15,117 +17,70 @@ public class Product {
 	private int productionCost;
 	private int salesPrice;
 
-	public Product(String productId, int doughPrepTime, int restingPeriod, int itemPrepTime, int itemsFitInOvenSlot,
-			int bakingTime, int bakingTemperature, int boxingTemperature, int coolingTimeFactor, int itemsFitInBox,
-			int productionCost, int salesPrice) {
-		this.productId = productId;
-		this.doughPrepTime = doughPrepTime;
-		this.restingPeriod = restingPeriod;
-		this.itemPrepTime = itemPrepTime;
-		this.itemsFitInOvenSlot = itemsFitInOvenSlot;
-		this.bakingTime = bakingTime;
-		this.bakingTemperature = bakingTemperature;
-		this.boxingTemperature = boxingTemperature;
-		this.coolingTimeFactor = coolingTimeFactor;
-		this.itemsFitInBox = itemsFitInBox;
-		this.productionCost = productionCost;
-		this.salesPrice = salesPrice;
+	
+	public static Product fromJson(JsonNode node) {
+		Product product= new Product();
+		product.id = node.get("id").asText();
+		product.doughPrepTime = node.get("dough-prep-time").asInt();
+		product.restingPeriod = node.get("resting-time").asInt();
+		product.itemPrepTime = node.get("item-prep-time").asInt();
+		product.itemsFitInOvenSlot = node.get("number-fitting-in-oven-slot").asInt();
+		product.bakingTime = node.get("baking-time").asInt();
+		product.bakingTemperature = node.get("baking-temp").asInt();
+		product.boxingTemperature = node.get("boxing-temp").asInt();
+		product.coolingTimeFactor = node.get("cooling-time-factor").asInt();
+		product.itemsFitInBox = node.get("items-fitting-in-box").asInt();
+		product.productionCost = node.get("production-price").asInt();
+		product.salesPrice = node.get("sales-price").asInt();
+		return product;
 	}
 
-	public String getProductId() {
-		return productId;
-	}
-
-	public void setProductId(String productId) {
-		this.productId = productId;
+	public String getId() {
+		return id;
 	}
 
 	public int getDoughPrepTime() {
 		return doughPrepTime;
 	}
 
-	public void setDoughPrepTime(int doughPrepTime) {
-		this.doughPrepTime = doughPrepTime;
-	}
-
 	public int getRestingPeriod() {
 		return restingPeriod;
-	}
-
-	public void setRestingPeriod(int restingPeriod) {
-		this.restingPeriod = restingPeriod;
 	}
 
 	public int getItemPrepTime() {
 		return itemPrepTime;
 	}
 
-	public void setItemPrepTime(int itemPrepTime) {
-		this.itemPrepTime = itemPrepTime;
-	}
-
 	public int getItemsFitInOvenSlot() {
 		return itemsFitInOvenSlot;
-	}
-
-	public void setItemsFitInOvenSlot(int itemsFitInOvenSlot) {
-		this.itemsFitInOvenSlot = itemsFitInOvenSlot;
 	}
 
 	public int getBakingTime() {
 		return bakingTime;
 	}
 
-	public void setBakingTime(int bakingTime) {
-		this.bakingTime = bakingTime;
-	}
-
 	public int getBakingTemperature() {
 		return bakingTemperature;
-	}
-
-	public void setBakingTemperature(int bakingTemperature) {
-		this.bakingTemperature = bakingTemperature;
 	}
 
 	public int getBoxingTemperature() {
 		return boxingTemperature;
 	}
 
-	public void setBoxingTemperature(int boxingTemperature) {
-		this.boxingTemperature = boxingTemperature;
-	}
-
 	public int getCoolingTimeFactor() {
 		return coolingTimeFactor;
-	}
-
-	public void setCoolingTimeFactor(int coolingTimeFactor) {
-		this.coolingTimeFactor = coolingTimeFactor;
 	}
 
 	public int getItemsFitInBox() {
 		return itemsFitInBox;
 	}
 
-	public void setItemsFitInBox(int itemsFitInBox) {
-		this.itemsFitInBox = itemsFitInBox;
-	}
-
 	public int getProductionCost() {
 		return productionCost;
 	}
 
-	public void setProductionCost(int productionCost) {
-		this.productionCost = productionCost;
-	}
-
 	public int getSalesPrice() {
 		return salesPrice;
-	}
-
-	public void setSalesPrice(int salesPrice) {
-		this.salesPrice = salesPrice;
 	}
 
 }

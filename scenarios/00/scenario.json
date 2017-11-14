@@ -1,7 +1,7 @@
 {
     "bakeries": [
         {
-            "id"
+            "id": "olaf",
             "kneading-machines": 2,
             "ovens": 1,
             "oven-heating-time-factor": 1,
