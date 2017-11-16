@@ -1,49 +1,51 @@
 package org.awesomebakery.model;
 
-public class Order {
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import com.fasterxml.jackson.databind.JsonNode;
+
+public class Order extends Entity {
 
 	private String customerId;
 	private Date orderDate;
 	private Date deliveryDate;
-	private int[] orders;
+	private Map<String, Integer> products;
 
-	public Order(String customerId, Date orderDate, Date deliveryDate, int[] orders) {
-		this.customerId = customerId;
-		this.orderDate = orderDate;
-		this.deliveryDate = deliveryDate;
-		this.orders = orders;
+	public Order(String guid) {
+		super(guid);
+	}
+
+	public static Order fromJson(JsonNode node) {
+		Order order = new Order(node.get("guid").asText());
+		order.customerId = node.get("customer_id").asText();
+		order.deliveryDate = Date.fromJson(node.get("delivery_date"));
+		order.orderDate = Date.fromJson(node.get("order_date"));
+		order.products = new HashMap<>();
+		JsonNode products = node.get("products");
+		Iterator<String> productIterator = products.fieldNames();
+		while (productIterator.hasNext()) {
+			String productName = productIterator.next();
+			order.products.put(productName, products.get(productName).asInt());
+		}
+		return order;
 	}
 
 	public String getCustomerId() {
 		return customerId;
 	}
 
-	public void setCustomerId(String customerId) {
-		this.customerId = customerId;
-	}
-
 	public Date getOrderDate() {
 		return orderDate;
-	}
-
-	public void setOrderDate(Date orderDate) {
-		this.orderDate = orderDate;
 	}
 
 	public Date getDeliveryDate() {
 		return deliveryDate;
 	}
 
-	public void setDeliveryDate(Date deliveryDate) {
-		this.deliveryDate = deliveryDate;
-	}
-
-	public int[] getOders() {
-		return orders;
-	}
-
-	public void setOders(int[] oders) {
-		this.orders = oders;
+	public Map<String, Integer> getProducts() {
+		return products;
 	}
 
 }
