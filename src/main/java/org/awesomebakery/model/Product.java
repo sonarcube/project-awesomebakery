@@ -17,21 +17,20 @@ public class Product {
 	private int productionCost;
 	private int salesPrice;
 
-	
 	public static Product fromJson(JsonNode node) {
-		Product product= new Product();
+		Product product = new Product();
 		product.id = node.get("id").asText();
-		product.doughPrepTime = node.get("dough-prep-time").asInt();
-		product.restingPeriod = node.get("resting-time").asInt();
-		product.itemPrepTime = node.get("item-prep-time").asInt();
-		product.itemsFitInOvenSlot = node.get("number-fitting-in-oven-slot").asInt();
-		product.bakingTime = node.get("baking-time").asInt();
-		product.bakingTemperature = node.get("baking-temp").asInt();
-		product.boxingTemperature = node.get("boxing-temp").asInt();
-		product.coolingTimeFactor = node.get("cooling-time-factor").asInt();
-		product.itemsFitInBox = node.get("items-fitting-in-box").asInt();
-		product.productionCost = node.get("production-price").asInt();
-		product.salesPrice = node.get("sales-price").asInt();
+		product.doughPrepTime = node.get("dough_prep_time").asInt();
+		product.restingPeriod = node.get("resting_time").asInt();
+		product.itemPrepTime = node.get("item_prep_time").asInt();
+		product.itemsFitInOvenSlot = node.get("breads_per_oven").asInt();
+		product.bakingTime = node.get("baking_time").asInt();
+		product.bakingTemperature = node.get("baking_temp").asInt();
+		product.boxingTemperature = node.get("boxing_temp").asInt();
+		product.coolingTimeFactor = node.get("cooling_rate").asInt();
+		product.itemsFitInBox = node.get("breads_per_box").asInt();
+		product.productionCost = node.get("production_cost").asInt();
+		product.salesPrice = node.get("sales_price").asInt();
 		return product;
 	}
 

@@ -6,18 +6,22 @@ import java.util.Map;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-public class Order {
+public class Order extends Entity {
 
 	private String customerId;
 	private Date orderDate;
 	private Date deliveryDate;
 	private Map<String, Integer> products;
 
+	public Order(String guid) {
+		super(guid);
+	}
+
 	public static Order fromJson(JsonNode node) {
-		Order order = new Order();
-		order.customerId = node.get("customer-id").asText();
-		order.deliveryDate = Date.fromJson(node.get("delivery-date"));
-		order.orderDate = Date.fromJson(node.get("order-date"));
+		Order order = new Order(node.get("guid").asText());
+		order.customerId = node.get("customer_id").asText();
+		order.deliveryDate = Date.fromJson(node.get("delivery_date"));
+		order.orderDate = Date.fromJson(node.get("order_date"));
 		order.products = new HashMap<>();
 		JsonNode products = node.get("products");
 		Iterator<String> productIterator = products.fieldNames();
