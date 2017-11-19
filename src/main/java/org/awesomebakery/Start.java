@@ -6,8 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.awesomebakery.agents.Bakery;
-import org.awesomebakery.agents.Customer;
+import org.awesomebakery.agents.*;
 import org.awesomebakery.model.Order;
 import org.awesomebakery.model.Scenario;
 
@@ -59,7 +58,17 @@ public class Start {
 			Bakery agent = new Bakery(bakery.getName());
 			mainContainer.acceptNewAgent(bakery.getName(), agent).start();
 		}
-		
+		KneadingManager kneadingManager = new KneadingManager("KneadingManager");
+		mainContainer.acceptNewAgent("KneadingManager", kneadingManager).start();
+
+		OvenManager ovenManager = new OvenManager("OvenManager");
+		mainContainer.acceptNewAgent("OvenManager", ovenManager).start();
+
+		DoughPreparer doughPreparer = new DoughPreparer("DoughPreparer");
+		mainContainer.acceptNewAgent("DoughPreparer", doughPreparer).start();
+
+		DoughRester doughRester = new DoughRester("DoughRester");
+		mainContainer.acceptNewAgent("DoughRester", doughRester).start();
 		mainContainer.start();
 	}
 }
