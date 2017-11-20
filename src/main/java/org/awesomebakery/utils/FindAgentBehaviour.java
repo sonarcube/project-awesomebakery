@@ -54,7 +54,6 @@ public class FindAgentBehaviour extends Behaviour {
         }
 
         setFoundedAgentID(agentID);
-        System.out.println("FindAgenteBehaviour 57 "+getFoundedAgentID());
         if (!agentID.isEmpty()) {
             /*for (Object object : objectList) {
                 myAgent.addBehaviour(behaviour);
