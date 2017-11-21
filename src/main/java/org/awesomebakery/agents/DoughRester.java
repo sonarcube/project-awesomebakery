@@ -12,8 +12,10 @@ import jade.lang.acl.MessageTemplate;
 import java.util.List;
 import java.util.Vector;
 
-public class DoughRester extends Agent {
-    public static final String SERVICE_TYPE = "DoughRester";
+public class DoughRester extends Agent implements ProductionParticipant{
+	private static final long serialVersionUID = 3213192460512915864L;
+
+	public static final String SERVICE_TYPE = "DoughRester";
 
     private List<String> orders = new Vector<>();
     private String name;
@@ -39,7 +41,9 @@ public class DoughRester extends Agent {
     }
 
     private class TakeOrder extends CyclicBehaviour {
-        @Override
+		private static final long serialVersionUID = -5515296863719375814L;
+
+		@Override
         public void action() {
             MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.CFP);
             ACLMessage msg = myAgent.receive(mt);
@@ -55,4 +59,9 @@ public class DoughRester extends Agent {
             }
         }
     }
+
+	@Override
+	public String getServiceType() {
+		return SERVICE_TYPE;
+	}
 }

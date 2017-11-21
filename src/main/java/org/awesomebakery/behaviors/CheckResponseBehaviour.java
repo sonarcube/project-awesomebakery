@@ -1,13 +1,12 @@
-package org.awesomebakery.utils;
+package org.awesomebakery.behaviors;
 
-import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-import org.awesomebakery.agents.Customer;
 
 public class CheckResponseBehaviour extends Behaviour {
-    public boolean done = false;
+	private static final long serialVersionUID = -6981765604055831573L;
+	public boolean done = false;
     private MessageTemplate mt;
 
     private Behaviour behaviour;

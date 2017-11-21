@@ -1,12 +1,7 @@
 package org.awesomebakery.agents;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-import java.util.Vector;
 
 import org.awesomebakery.model.Order;
 
@@ -23,6 +18,7 @@ import jade.lang.acl.MessageTemplate;
 
 public class Customer extends Agent {
 
+	private static final long serialVersionUID = 2900621781398066801L;
 	private final List<Order> orders;
 	private List<AID> bakeries;
 
@@ -101,7 +97,6 @@ public class Customer extends Agent {
 
 	private class CheckResponseBehaviour extends Behaviour {
 		private static final long serialVersionUID = 1L;
-		boolean done = false;
 
 		@Override
 		public void action() {
@@ -125,7 +120,7 @@ public class Customer extends Agent {
 
 		@Override
 		public boolean done() {
-			return done = true;
+			return true;
 		}
 
 	}

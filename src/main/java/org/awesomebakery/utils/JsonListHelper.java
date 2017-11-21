@@ -11,6 +11,7 @@ public class JsonListHelper {
 		List<T> list = new Vector<>();
 		for (JsonNode node : arrayNode) {
 			try {
+				@SuppressWarnings("unchecked")
 				T o = (T) clazz.getMethod("fromJson", JsonNode.class).invoke(null, node);
 				list.add(o);
 			} catch (Throwable t) {

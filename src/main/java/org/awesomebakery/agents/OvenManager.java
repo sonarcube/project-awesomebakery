@@ -1,58 +1,15 @@
 package org.awesomebakery.agents;
 
-import jade.core.Agent;
-import jade.core.behaviours.CyclicBehaviour;
-import jade.domain.DFService;
-import jade.domain.FIPAAgentManagement.DFAgentDescription;
-import jade.domain.FIPAAgentManagement.ServiceDescription;
-import jade.domain.FIPAException;
-import jade.lang.acl.ACLMessage;
-import jade.lang.acl.MessageTemplate;
+public class OvenManager extends ManagerAgent {
+	private static final long serialVersionUID = 6874014530350418319L;
+	public static final String SERVICE_TYPE = "OvenManager";
 
-import java.util.List;
-import java.util.Vector;
+	public OvenManager(String name) {
+		super(name);
+	}
 
-public class OvenManager extends Agent {
-    public static final String SERVICE_TYPE = "OvenManager";
-
-    private List<String> orders = new Vector<>();
-    private String name;
-
-    public OvenManager(String name) {
-        this.name = name;
-    }
-
-    protected void setup() {
-        DFAgentDescription dfd = new DFAgentDescription();
-        dfd.setName(getAID());
-        ServiceDescription sd = new ServiceDescription();
-        sd.setType(SERVICE_TYPE);
-        sd.setName(name);
-        dfd.addServices(sd);
-        try {
-            DFService.register(this, dfd);
-        } catch (FIPAException e) {
-            // TODO handle
-            e.printStackTrace();
-        }
-        addBehaviour(new OvenManager.TakeOrder());
-    }
-
-    private class TakeOrder extends CyclicBehaviour {
-        @Override
-        public void action() {
-            MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.CFP);
-            ACLMessage msg = myAgent.receive(mt);
-            if (msg != null) {
-                String name = msg.getContent();
-                ACLMessage reply = msg.createReply();
-                orders.add(name);
-                reply.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
-                myAgent.send(reply);
-                System.out.println("OvenManager orders "+orders);
-            } else {
-                block();
-            }
-        }
-    }
+	@Override
+	public String getServiceType() {
+		return SERVICE_TYPE;
+	}
 }
