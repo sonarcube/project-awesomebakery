@@ -2,12 +2,12 @@ package org.awesomebakery.agents;
 
 import jade.lang.acl.ACLMessage;
 
-public class Truck extends ServiceAgent {
+public class DoughPreparer extends ServiceAgent {
+	private static final long serialVersionUID = -7194206594373177352L;
 
-	private static final long serialVersionUID = 792717694937675847L;
-	public static final String SERVICE_TYPE = "truck";
+	public static final String SERVICE_TYPE = "DoughPreparer";
 
-	public Truck(String name) {
+	public DoughPreparer(String name) {
 		super(name);
 	}
 
@@ -19,7 +19,6 @@ public class Truck extends ServiceAgent {
 	@Override
 	public void onOrderReceived(ACLMessage message) {
 		// TODO Auto-generated method stub
-		
-	}
 
+	}
 }
