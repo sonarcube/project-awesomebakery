@@ -7,6 +7,10 @@
 * Markus Wiktorin - [@mwiktorin](https://github.com/mwiktorin)
 * Artur Zimmermann - [@azimme2s](https://github.com/azimme2s)
 
+## Dependencies 
+* JADE v.4.5.0
+* ...
+
 ## Howto run
 Just install gradle and run:
 
