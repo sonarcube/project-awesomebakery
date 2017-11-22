@@ -1,4 +1,4 @@
-package org.awesomebakery.agents;
+package org.awesomebakery.agents.managers;
 
 public class OvenManager extends ManagerAgent {
 	private static final long serialVersionUID = 6874014530350418319L;
@@ -12,4 +12,5 @@ public class OvenManager extends ManagerAgent {
 	public String getServiceType() {
 		return SERVICE_TYPE;
 	}
+
 }

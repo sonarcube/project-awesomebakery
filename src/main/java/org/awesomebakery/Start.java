@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.awesomebakery.agents.*;
+import org.awesomebakery.agents.managers.KneadingManager;
+import org.awesomebakery.agents.managers.OvenManager;
 import org.awesomebakery.model.Order;
 import org.awesomebakery.model.Scenario;
 

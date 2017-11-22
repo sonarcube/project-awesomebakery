@@ -1,4 +1,4 @@
-package org.awesomebakery.agents;
+package org.awesomebakery.agents.managers;
 
 public class KneadingManager extends ManagerAgent {
 

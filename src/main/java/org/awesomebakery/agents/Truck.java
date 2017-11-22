@@ -1,50 +1,25 @@
 package org.awesomebakery.agents;
 
-import org.awesomebakery.model.Location;
+import jade.lang.acl.ACLMessage;
 
-public class Truck {
+public class Truck extends ServiceAgent {
 
-	private String id;
-	private Location location;
-	private int maxNumberBoxes;
-	private int[] boxVector;
+	private static final long serialVersionUID = 792717694937675847L;
+	public static final String SERVICE_TYPE = "truck";
 
-	public Truck(String id, Location location, int maxNumberBoxes, int[] boxVector) {
-		this.id = id;
-		this.location = location;
-		this.maxNumberBoxes = maxNumberBoxes;
-		this.boxVector = boxVector;
+	public Truck(String name) {
+		super(name);
 	}
 
-	public String getId() {
-		return id;
+	@Override
+	public String getServiceType() {
+		return SERVICE_TYPE;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	@Override
+	public void onOrderReceived(ACLMessage message) {
+		// TODO Auto-generated method stub
+		
 	}
 
-	public Location getLocation() {
-		return location;
-	}
-
-	public void setLocation(Location location) {
-		this.location = location;
-	}
-
-	public int getMaxNumberBoxes() {
-		return maxNumberBoxes;
-	}
-
-	public void setMaxNumberBoxes(int maxNumberBoxes) {
-		this.maxNumberBoxes = maxNumberBoxes;
-	}
-
-	public int[] getBoxVector() {
-		return boxVector;
-	}
-
-	public void setBoxVector(int[] boxVector) {
-		this.boxVector = boxVector;
-	}
 }
