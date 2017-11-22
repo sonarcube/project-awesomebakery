@@ -13,7 +13,7 @@ public abstract class ManagerAgent extends ServiceAgent {
 	}
 
 	@Override
-	public void onOrderReceived(ACLMessage message) {
+	public void onMessageReceived(ACLMessage message) {
 		// TODO Auto-generated method stub
 	}
 

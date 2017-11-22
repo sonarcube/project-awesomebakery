@@ -6,7 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.awesomebakery.agents.*;
+import org.awesomebakery.agents.Bakery;
+import org.awesomebakery.agents.Customer;
+import org.awesomebakery.agents.DoughPreparer;
+import org.awesomebakery.agents.DoughRester;
 import org.awesomebakery.agents.managers.KneadingManager;
 import org.awesomebakery.agents.managers.OvenManager;
 import org.awesomebakery.model.Order;
@@ -51,8 +54,10 @@ public class Start {
 			customerOrders.get(order.getCustomerId()).add(order);
 		}
 
+		List<Customer> customerAgents = new ArrayList<>();
 		for (org.awesomebakery.model.Customer customer : scenario.getCustomers()) {
 			Customer agent = new Customer(customerOrders.get(customer.getName()));
+			customerAgents.add(agent);
 			mainContainer.acceptNewAgent(customer.getName(), agent).start();
 		}
 		
@@ -71,6 +76,19 @@ public class Start {
 
 		DoughRester doughRester = new DoughRester("DoughRester");
 		mainContainer.acceptNewAgent("DoughRester", doughRester).start();
+		
 		mainContainer.start();
+		
+		while(true) {
+			Thread.sleep(10000);
+			for(Customer customer : customerAgents) {
+				if(!customer.isDone()) {
+					continue;
+				}
+			}
+			System.out.println("All customers are done, kill platform...");
+			mainContainer.kill();
+			break;
+		}
 	}
 }
