@@ -31,7 +31,7 @@ public class Start {
 		Profile profile = new ProfileImpl(profileProperties);
 		AgentContainer mainContainer = runtime.createMainContainer(profile);
 		
-		File file = new File("src/main/config/sample-scenario.json");
+		File file = new File("src/main/config/random-scenario.json");
 		ObjectMapper objectMapper = new ObjectMapper();
 		JsonNode node;
 		try {
@@ -52,7 +52,7 @@ public class Start {
 		}
 
 		for (org.awesomebakery.model.Customer customer : scenario.getCustomers()) {
-			Customer agent = new Customer(customerOrders.get(customer.getName()));
+			Customer agent = new Customer(customerOrders.get(customer.getGuid()));
 			mainContainer.acceptNewAgent(customer.getName(), agent).start();
 		}
 		

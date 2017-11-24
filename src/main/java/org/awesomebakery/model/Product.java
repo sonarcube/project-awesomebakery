@@ -2,9 +2,8 @@ package org.awesomebakery.model;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-public class Product {
+public class Product extends Entity {
 
-	private String id;
 	private int doughPrepTime;
 	private int restingPeriod;
 	private int itemPrepTime;
@@ -17,9 +16,12 @@ public class Product {
 	private int productionCost;
 	private int salesPrice;
 
+	public Product(String guid) {
+		super(guid);
+	}
+
 	public static Product fromJson(JsonNode node) {
-		Product product = new Product();
-		product.id = node.get("id").asText();
+		Product product = new Product(node.get("guid").asText());
 		product.doughPrepTime = node.get("dough_prep_time").asInt();
 		product.restingPeriod = node.get("resting_time").asInt();
 		product.itemPrepTime = node.get("item_prep_time").asInt();
@@ -32,10 +34,6 @@ public class Product {
 		product.productionCost = node.get("production_cost").asInt();
 		product.salesPrice = node.get("sales_price").asInt();
 		return product;
-	}
-
-	public String getId() {
-		return id;
 	}
 
 	public int getDoughPrepTime() {
