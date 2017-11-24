@@ -1,11 +1,10 @@
 package org.awesomebakery.behaviors;
 
-
 import org.awesomebakery.agents.OrderReceiver;
 
 import jade.core.behaviours.CyclicBehaviour;
+import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
-import jade.lang.acl.MessageTemplate;
 
 public class TakeOrderBehavior extends CyclicBehaviour {
 
@@ -18,10 +17,18 @@ public class TakeOrderBehavior extends CyclicBehaviour {
 
 	@Override
 	public void action() {
-		MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.CFP);
-		ACLMessage msg = myAgent.receive(mt);
+		ACLMessage msg = myAgent.receive();
 		if (msg != null) {
-			orderReceiver.onOrderReceived(msg);
+			myAgent.addBehaviour(new OneShotBehaviour() {
+
+				private static final long serialVersionUID = -2682097323876790677L;
+
+				@Override
+				public void action() {
+					orderReceiver.onOrderReceived(msg);
+				}
+			});
+
 		} else {
 			block();
 		}
