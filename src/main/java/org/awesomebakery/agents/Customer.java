@@ -2,12 +2,14 @@ package org.awesomebakery.agents;
 
 import java.util.List;
 
+import jade.core.behaviours.OneShotBehaviour;
+import jade.core.behaviours.WakerBehaviour;
 import org.awesomebakery.behaviors.FindAgentBehaviour;
+import org.awesomebakery.model.Date;
 import org.awesomebakery.model.Order;
 
 import jade.core.AID;
 import jade.core.Agent;
-import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 
 public class Customer extends Agent {
@@ -21,23 +23,45 @@ public class Customer extends Agent {
 	}
 
 	protected void setup() {
-		addBehaviour(new FindAgentBehaviour(Bakery.SERVICE_TYPE, foundAgents -> {
+		addBehaviour(new FindAgentBehaviour(Bakery.SERVICE_TYPE, (List<AID> foundAgents) -> {
 			bakeries = foundAgents;
 			if (orders != null) {
 				for (Order order : orders) {
-					// TODO change behavior for requesting orders delayed
-					addBehaviour(new PlaceOrderBehaviour(order));
+					addBehaviour(new WakerBehaviour(this, setTimetoOrder(order)) {
+						@Override
+						protected void onWake() {
+							super.onWake();
+							addBehaviour(new PlaceOrderBehaviour(order));
+						}
+					});
 				}
 			}
 		}));
 	}
+	private long setTimetoOrder(Order order){
+		return order.getOrderDate().getDay()*2400+order.getOrderDate().getHour()*600;
+	}
+	private boolean checkDeliveryTime(Order order, long bakeryAnswer){
 
+		long hour = bakeryAnswer-order.getOrderDate().getHour()*600;
+		hour = hour - order.getOrderDate().getDay()*2400;
+
+		long day = bakeryAnswer-hour;
+
+		if (hour == order.getOrderDate().getDay()*2400 && ( day<= (order.getOrderDate().getDay()+200))){
+			return true;
+		}
+		else{
+			return false;
+		}
+
+	}
 	private class PlaceOrderBehaviour extends OneShotBehaviour {
 
 		private static final long serialVersionUID = 4800096756945729705L;
 		private Order order;
 
-		public PlaceOrderBehaviour(Order order) {
+		PlaceOrderBehaviour(Order order) {
 			this.order = order;
 		}
 

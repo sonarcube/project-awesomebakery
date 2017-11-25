@@ -50,7 +50,7 @@ public class Order extends Entity {
 	
 	@Override
 	public String toString() {
-		return "[" + customerId + "," + orderDate + "," + deliveryDate + "," + products.toString() + "]";
+		return "["+ customerId + "," + orderDate + "," + deliveryDate + "," + products.toString() + "]";
 	}
 
 }
