@@ -33,7 +33,7 @@ public class Start {
 		profileProperties.put(Profile.GUI, false);
 		Profile profile = new ProfileImpl(profileProperties);
 		AgentContainer mainContainer = runtime.createMainContainer(profile);
-		
+
 		File file = new File("src/main/config/random-scenario.json");
 		ObjectMapper objectMapper = new ObjectMapper();
 		JsonNode node;
@@ -45,7 +45,7 @@ public class Start {
 		}
 
 		Scenario scenario = Scenario.fromJson(node);
-		
+
 		Map<String, List<Order>> customerOrders = new HashMap<>();
 		for (Order order : scenario.getOrders()) {
 			if (!customerOrders.containsKey(order.getCustomerId())) {
@@ -60,8 +60,8 @@ public class Start {
 			customerAgents.add(agent);
 			mainContainer.acceptNewAgent(customer.getName(), agent).start();
 		}
-		
-		for(org.awesomebakery.model.Bakery bakery : scenario.getBakeries()) {
+
+		for (org.awesomebakery.model.Bakery bakery : scenario.getBakeries()) {
 			Bakery agent = new Bakery(bakery.getName());
 			mainContainer.acceptNewAgent(bakery.getName(), agent).start();
 		}
@@ -76,19 +76,22 @@ public class Start {
 
 		DoughRester doughRester = new DoughRester("DoughRester");
 		mainContainer.acceptNewAgent("DoughRester", doughRester).start();
-		
+
 		mainContainer.start();
-		
-		while(true) {
+
+		while (true) {
 			Thread.sleep(10000);
-			for(Customer customer : customerAgents) {
-				if(!customer.isDone()) {
-					continue;
+			boolean finished = true;
+			for (Customer customer : customerAgents) {
+				if (!customer.isDone()) {
+					finished = false;
 				}
 			}
-			System.out.println("All customers are done, kill platform...");
-			mainContainer.kill();
-			break;
+			if (finished) {
+				System.out.println("All customers are done, kill platform...");
+				mainContainer.kill();
+				break;
+			}
 		}
 	}
 }
