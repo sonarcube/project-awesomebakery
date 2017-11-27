@@ -1,6 +1,7 @@
 # AwesomeBakery project
 
 [![Build Status](https://travis-ci.org/HBRS-MAAS/project-awesomebakery.svg?branch=master)](https://travis-ci.org/HBRS-MAAS/project-awesomebakery)
+[![Quality Gate](https://sonarcloud.io/api/badges/gate?key=project-awesomebakery)](https://sonarcloud.io/dashboard?id=project-awesomebakery)
 
 ## Team members
 * Torsten Jandt - [@element54](https://github.com/element54)
