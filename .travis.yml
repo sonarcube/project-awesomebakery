@@ -1,6 +1,19 @@
 language: java
 jdk:
-    - openjdk8
+  - openjdk8
+sudo: false
+install: true
 group: stable
 dist: trusty
 os: linux
+addons:
+  sonarcloud:
+    organization: "awesomebakery"
+    branches:
+      - ".*"
+    token:
+      secure: "n7b2IP5xlsxBbbQ+lELb3sI7rByZ5EYKK1egZrg71DeoxgbNYoFjsZf0yJR0DvpsqAp5SpTLb4TMSAbIiHfihNHLsZ7Mj9olkTosz3bWNuPqLI/3D11/cWmj8L+K7+QM1aZhxbQlvtKvZ0yem7CPkzwNitLCSdBpwwdVAEItTAw+Kq2s35LNAC2nyRcxzBYBSSdoN4q6jJwaqk66FJAVbb+cM4kaP0kTetN8N7EPRfZgAi+wfoi+yeCdQZVzA5L7nOMmOl50iEy18DMCZKCJZGhce+j3aZY9ZlzRrr2ZTKJn49+SKipCFbYuHnQzQ3G7hTmy0qkQr/Yy3vTu0lgTtbjKA1TEnD6utqSZxZd/g+9V/UnS+aB4beaudbsYdH73szY2M/9EA2Ql5bBsa31LMJ2QApRvXl3NozcpPLbPOAE0xSN7UUDAucTAqzcvA1rbJZW64vLNRMz2B+Nhbw7dQntprLajS6t3xcjDxyPIIU6qEXFBzbveS7z5xQsb15hi0eIf0XqbtgL100YTE0q506CUcXI64EexEjgDpAQNp73R8zuPOfZe4xLPGUZ32UW+Wmj54jjA5HImi7eJoDBNJOmklsVxv9+/WQV5WnnK9Czh4yvfwvgt4I2lLt+pwFDDCxXHtdofySp72Gz9TUeR3WNj8vqNlw3NV8l1d6jg02g="
+    github_token:
+      secure: "Nb8SsSAcH/emZlqKdEwoDbf3QaD3yxfCGZUmo8O6isNy9EpQDL8D9Qfm5KDR8W6TJzmlf+Suk73MPK24pAFKC2xzOhsInWXnxnUa2btZuRA18N8NgIRsG1wkYOFEykbmDYstk1Tl5Gpv3T5PxEZz70Yv/MxmAvU37VrLKxZ2mGd0h7JTPeLfPs0lep8n/sS68MHGPl998IXLcvPA03BN0N/blGDWAiTCDhkINhtMx69i1GZ/00n2IrVi8finGGPNXEXAgI5dwQetFPzdhhvZpE8sHI3lvAh2mDUZOzKqEt2q7e87LqCT2Sdkx9CFs9QuKadDktsU020WFAdJlaOv5T7YEuy1CquTbDb9AuTYZN3oN2izT4nL2ZTjKR7aYtierPSTek7phREMpfuAXXclBc7TE+QyIX0S3tGEKs8M1cE3Ep/S568CaKRAg7deZmx+jZ10gsX963AICR+waVwcFDxqwL2Us2CTw9xq4BEAHxgYqsHH/eRlgJLpWwSgPNEykdOSg+cU0Hh+XwG/xElAEy/lHy9IFWbNdTSgAhPOXknuuy2E/pZOBrH3xq4KLzEnHCWI08Qbo0qN4JQQY0RQNyhBFfhVigchAsJxPu9uHucl3qG2RHUCFG07id2s6WO1nGZJdd5pK9DLtv9JYE+2EmjSdhXHjhZ/uSIA/2cD8oY="
+script:
+  - "gradle sonarqube"
