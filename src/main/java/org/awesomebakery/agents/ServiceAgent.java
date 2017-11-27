@@ -1,6 +1,6 @@
 package org.awesomebakery.agents;
 
-import org.awesomebakery.behaviors.TakeOrderBehavior;
+import org.awesomebakery.behaviors.ReceiveMessageBehavior;
 
 import jade.core.Agent;
 import jade.domain.DFService;
@@ -8,7 +8,7 @@ import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 
-public abstract class ServiceAgent extends Agent implements OrderReceiver {
+public abstract class ServiceAgent extends Agent implements MessageReceiver {
 
 	private static final long serialVersionUID = -1533825643866888846L;
 
@@ -38,7 +38,7 @@ public abstract class ServiceAgent extends Agent implements OrderReceiver {
 			// TODO handle
 			e.printStackTrace();
 		}
-		addBehaviour(new TakeOrderBehavior(this));
+		addBehaviour(new ReceiveMessageBehavior(this));
 	}
 
 }

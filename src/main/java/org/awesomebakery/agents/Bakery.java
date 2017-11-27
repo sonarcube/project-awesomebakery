@@ -50,7 +50,7 @@ public class Bakery extends ServiceAgent {
 	}
 
 	@Override
-	public void onOrderReceived(ACLMessage message) {
+	public void onMessageReceived(ACLMessage message) {
 		System.out.println("I got this order " + message.getContent());
 	}
 }

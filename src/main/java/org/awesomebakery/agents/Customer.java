@@ -32,6 +32,11 @@ public class Customer extends Agent {
 		}));
 	}
 
+	public boolean isDone() {
+		// TODO this will need to change
+		return true;
+	}
+
 	private class PlaceOrderBehaviour extends OneShotBehaviour {
 
 		private static final long serialVersionUID = 4800096756945729705L;
